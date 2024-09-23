@@ -35,8 +35,8 @@ git clone https://github.com/nalvarado/user-project-jwt.git
 Una vez descargada las fuentes se deben ejecutar los siguiente comandos por consola:
 
 ```
-gradlew build
-gradlew bootRun
+./gradlew build
+./gradlew bootRun
 ```
 
 La ejecución de la consola para acceder a la base de datos es a través del siguiente link:
@@ -59,6 +59,14 @@ Antes de la ejecución del servicio, favor considerar que el patron con la regex
 #Una Mayuscula, letras minúsculas, y dos numeros
 validation.password.pattern=^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$
 ```
+URL Test resultado
+```
+#ejecutar el siguiente comando.
+./gradlew test 
+#ruta del reporte
+/user-project-jwt/build/reports/tests/test/index.html
+```
+
 La ejecución del servicio de registro es a través de la siguiente url:
 
 ```
