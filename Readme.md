@@ -29,7 +29,7 @@ spring.sql.init.mode=always
 Descargar Fuentes de git
 
 ```
-git clone master
+git clone https://github.com/nalvarado/user-project-jwt.git
 ```
 
 Una vez descargada las fuentes se deben ejecutar los siguiente comandos por consola:
