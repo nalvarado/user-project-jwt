@@ -27,6 +27,6 @@ public class UserRequestDTO {
     @NotBlank(message = "Attribute 'password' should not be empty.")
     private String name;
 
-    private List<PhoneModel> phones;
+    private List<PhoneRequestDTO> phones;
 
 }

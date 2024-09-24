@@ -9,13 +9,16 @@ import com.project.user.service.JwtService;
 import com.project.user.service.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,8 @@ public class UserServiceImpl implements UserServiceInterface {
     @Value("${validation.password.pattern}")
     private String passwordRegex;
 
+    private final ModelMapper modelMapper;
+
     @Override
     public Optional<UserModel> findById(UUID uuid) {
         return userRepository.findById(uuid);
@@ -43,6 +48,11 @@ public class UserServiceImpl implements UserServiceInterface {
             throw new UserAlreadyExistsException("User email already exists.");
         } else {
 
+            List<PhoneModel> phonesList = userRequestDTO.getPhones()
+                    .stream()
+                    .map(phones -> modelMapper.map(phones, PhoneModel.class))
+                    .collect(Collectors.toList());
+
             UserModel newUser = UserModel.builder()
                     .name(userRequestDTO.getName())
                     .email(userRequestDTO.getEmail())
@@ -51,7 +61,7 @@ public class UserServiceImpl implements UserServiceInterface {
                     .modified(new Date())
                     .active(Boolean.TRUE)
                     .created(new Date())
-                    .phones(userRequestDTO.getPhones()).build();
+                    .phones(phonesList).build();
 
             for (PhoneModel phone: newUser.getPhones()) {
                 phone.setUser(newUser);
